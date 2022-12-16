@@ -34,9 +34,9 @@ public class EmployeeService implements EmployeeServiceImp{
         @Override
         public Employee updateEmployeePayrollData(int EmpId,EmployeePayrollDTO empPayrollDTO) {
 
-          Employee employee=employeeRepo.findById(EmpId).get();
-            employee.setEmployeename(empPayrollDTO.getEmployeename());
-            employee.setSalary(empPayrollDTO.getSalary());
+          Employee employee=new Employee(empPayrollDTO);
+          employee.setEmployeeid(EmpId);
+
 
             return employeeRepo.save(employee);
 

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+
 @RestController
 @RequestMapping("EmployeePayroll")
 public class EmployeeController {
@@ -28,7 +28,12 @@ public class EmployeeController {
         ResponseDTO responseDTO=new ResponseDTO("Get Call Sucess by Id",findById);
         return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
-
+    @GetMapping("/employeename/{employeename}")
+    public ResponseEntity<ResponseDTO> getEmployeePayrollDataForDepartment(@PathVariable("employeename") String employeename) {
+        List<Employee> empDataList =employeeService.getEmployeeDataByName(employeename);
+        ResponseDTO respDTO = new ResponseDTO("Get Call for department Successful", empDataList);
+        return new ResponseEntity<ResponseDTO>(respDTO, HttpStatus.OK);
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> CreateEmployeePayroll(@RequestBody EmployeePayrollDTO employeePayrollDTO){

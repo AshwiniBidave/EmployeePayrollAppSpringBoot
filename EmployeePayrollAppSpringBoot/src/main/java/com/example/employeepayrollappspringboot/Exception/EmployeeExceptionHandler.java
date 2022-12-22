@@ -18,8 +18,7 @@ public class EmployeeExceptionHandler {
     public ResponseEntity<ResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
         List<ObjectError> errorList= exception.getBindingResult().getAllErrors();
         List<String> errMesg =  errorList.stream()
-                .map(objectError -> objectError.getDefaultMessage())
-                .collect(Collectors.toList());
+                .map(objectError -> objectError.getDefaultMessage()).collect(Collectors.toList());
         ResponseDTO responseDTO = new ResponseDTO(message,errMesg);
         return new ResponseEntity<>(responseDTO, HttpStatus.BAD_REQUEST);
     }

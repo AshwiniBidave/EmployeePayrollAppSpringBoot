@@ -1,6 +1,7 @@
 package com.example.employeepayrollappspringboot.Service;
 import com.example.employeepayrollappspringboot.Entity.Employee;
 import com.example.employeepayrollappspringboot.DTO.EmployeePayrollDTO;
+import com.example.employeepayrollappspringboot.Exception.EmployeeException;
 import com.example.employeepayrollappspringboot.Repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,21 @@ public class EmployeeService implements EmployeeServiceImp{
 
     @Override
     public List<Employee> getEmployeePayrollData() {
-        return employeeRepo.findAll();
+        if(employeeRepo.findAll().isEmpty())
+        {
+            throw new EmployeeException("no Employee is found");
+        }else
+        {
+           return  employeeRepo.findAll();
+        }
+
     }
 
     @Override
     public Employee getEmployeePayrollDataById(int EmpId) {
 
-        return employeeRepo.findById(EmpId).get();
+        return employeeRepo.findById(EmpId).orElseThrow(() -> new EmployeeException("Employee with given ID not Found"));
+
     }
 
     @Override
@@ -47,6 +56,6 @@ public class EmployeeService implements EmployeeServiceImp{
 
     @Override
     public List<Employee> getEmployeeDataByName(String employeename) {
-        return employeeRepo.findByname(employeename);
+        return employeeRepo.findByName(employeename);
     }
 }

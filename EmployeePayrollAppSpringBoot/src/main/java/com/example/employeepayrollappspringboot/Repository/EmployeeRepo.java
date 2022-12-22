@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface EmployeeRepo extends JpaRepository<Employee,Integer> {
 
-@Query(value = "select  * from Employee e where  e.employeename=employeename",nativeQuery = true)
-    List<Employee> findByname(String employeename);
+@Query(value = "select * from Employee e where e.employeename=? ",nativeQuery = true)
+List<Employee> findByName(String employeename);
 }
